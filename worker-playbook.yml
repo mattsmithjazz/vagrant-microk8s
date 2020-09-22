@@ -1,0 +1,43 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: Install packages for microk8s
+    apt:
+      name: "{{ packages }}"
+      state: present
+      update_cache: true
+    vars:
+      packages:
+        - docker
+        - docker-compose
+
+  - name: Add vagrant user to docker group
+    user:
+      name: vagrant
+      group: docker
+
+  - name: Install microk8s snap
+    snap:
+      name: microk8s
+      classic: true
+      channel: 1.19
+    
+  - name: Add vagrant user to microk8s group
+    user:
+      name: vagrant
+      group: microk8s
+
+  - name: Setup kubeconfig for vagrant user
+    command: "{{ item }}"
+    with_items:
+      - usermod -g vagrant vagrant
+      - usermod -a -G microk8s vagrant
+      - microk8s status --wait-ready
+      - sudo chown -f -R $USER ~/.kube
+
+  - name: Copy the join command to server location
+    copy: src=join-command dest=/tmp/join-command.sh mode=0777
+
+  - name: Join the node to the cluster
+    command: /usr/bin/sudo /bin/sh -c /tmp/join-command.sh
