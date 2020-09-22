@@ -3,9 +3,7 @@ Ansible automated two-node microk8s cluster on Vagrant
 
 This project is largely inspired by the tutorial here ... https://kubernetes.io/blog/2019/03/15/kubernetes-setup-using-ansible-and-vagrant/
 
-Requirements: ansible
-              Vagrant
-              Virtualbox
+Requirements: Ansible, Vagrant, and Virtualbox
               
 I only configured this for two nodes, since pods are schedulable on the master node by default.
 
