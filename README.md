@@ -9,4 +9,4 @@ Requirements: ansible
               
 I only configured this for two nodes, since pods are schedulable on the master node by default.
 
-This works with kubesail.com, an awesome tool if you haven't checked it out!
+This works with https://kubesail.com, an awesome tool if you haven't checked it out!
