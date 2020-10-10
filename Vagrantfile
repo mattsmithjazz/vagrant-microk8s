@@ -30,7 +30,7 @@ Vagrant.configure("2") do |config|
       
       master.vm.hostname = "master"
       master.vm.provision "ansible", type:'ansible' do |ansible|
-          ansible.playbook = "microk8s-setup/master-playbook.yml"
+          ansible.playbook = "master-playbook.yml"
           ansible.extra_vars = {
               worker_ip: "192.168.50.10",
           }
@@ -43,7 +43,7 @@ Vagrant.configure("2") do |config|
           worker.vm.network "private_network", ip: "192.168.50.11"
           worker.vm.hostname = "worker"
           worker.vm.provision "ansible" do |ansible|
-              ansible.playbook = "microk8s-setup/worker-playbook.yml"
+              ansible.playbook = "worker-playbook.yml"
               ansible_extra_vars = {
                   worker_ip: "192.168.50.11",
               }
